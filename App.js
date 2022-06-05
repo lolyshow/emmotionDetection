@@ -28,16 +28,20 @@ export default function App() {
     } else {
       return faceData.map((face, index) => {
         console.log("myEyeShotStatusfdfd",face)
-        const eyesShut = face.rightEyeOpenProbability < 0.4 && face.leftEyeOpenProbability < 0.4;
-        const winking = !eyesShut && (face.rightEyeOpenProbability < 0.4 || face.leftEyeOpenProbability < 0.4);
+        const eyesShut = face.rightEyeOpenProbability < 0.2 && face.leftEyeOpenProbability < 0.2;
+        const winking = !eyesShut && (face.rightEyeOpenProbability < 0.6 || face.leftEyeOpenProbability < 0.6);
         const smiling = face.smilingProbability > 0.7;
-        
+        const sad = face.smilingProbability <0.7;
+        const shocked = face.leftEyeOpenProbability>0.8;
 
         return (
           <View style={styles.faces} key={index}>
-            <Text style={styles.faceDesc}>Eyes Shut: {eyesShut.toString()}</Text>
+            <Text>{eyesShut?"You Shut your Eye":smiling?"You are Happy!!!":sad?"You Are sad":shocked?"You are Shocked":"Normal Face"
+            
+            }</Text>
+            {/* <Text style={styles.faceDesc}>Eyes Shut: {eyesShut.toString()}</Text>
             <Text style={styles.faceDesc}>Winking: {winking.toString()}</Text>
-            <Text style={styles.faceDesc}>Smiling: {smiling.toString()}</Text>
+            <Text style={styles.faceDesc}>Smiling: {smiling.toString()}</Text> */}
           </View>
         );
       });
